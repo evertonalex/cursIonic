@@ -1,3 +1,4 @@
+/*USADO PARA LAZY LOADING*/ 
 import { IonicPageModule } from 'ionic-angular/module';
 import { NgModule } from '@angular/core';
 import { HomePage } from './home';
@@ -6,4 +7,4 @@ import { HomePage } from './home';
     imports: [IonicPageModule.forChild(HomePage)]
 })
 export class HomeModule {
-}
+} 
