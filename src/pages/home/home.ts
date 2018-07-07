@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { CredenciaisDTO } from '../../app/models/credenciais.dto';
+import { AuthService } from '../../app/services/auth.service';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,11 @@ export class HomePage {
     senha: ""
   }
 
-  constructor(public navCtrl: NavController, public menu: MenuController) { //injecao de dependencia ionic/angular apenas passar como parametro do construtor
+  constructor(
+    public navCtrl: NavController, 
+    public menu: MenuController,
+    public auth: AuthService
+  ) { //injecao de dependencia ionic/angular apenas passar como parametro do construtor
 
   }
 
@@ -32,7 +37,13 @@ export class HomePage {
 
   login(){
     console.log(this.creds);
-    this.navCtrl.setRoot("CategoriasPage")
+    this.auth.authenticate(this.creds).subscribe(response=>{
+      console.log(response.headers.get('Authorization'));
+      this.navCtrl.setRoot("CategoriasPage")
+    },
+    error =>{}
+  )
+    
   }
 
 
