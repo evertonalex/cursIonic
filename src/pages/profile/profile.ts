@@ -1,7 +1,6 @@
 import { API_CONFIG } from './../../app/config/api.config';
 import { ClienteService } from './../../app/services/domain/cliente.service';
 import { StorageService } from './../../app/services/storage.service';
-import { LocalUser } from './../../app/models/local_user';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ClienteDTO } from '../../app/models/cliente.dto';
@@ -30,7 +29,13 @@ export class ProfilePage {
         this.cliente = response;
         //buscar imagem
       },
-      error=>{});
+      error=>{
+        if(error.status == 403){
+          this.navCtrl.setRoot('HomePage');
+        }
+      });
+    }else{
+      this.navCtrl.setRoot('HomePage');
     }
   }
 
