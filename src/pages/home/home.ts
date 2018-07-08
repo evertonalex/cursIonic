@@ -51,9 +51,12 @@ export class HomePage {
       console.log(response.headers.get('Authorization'));
       this.navCtrl.setRoot("CategoriasPage")
     },
-    error =>{}
-  )
-    
+    error =>{});
+  }
+
+  signup(){
+    console.log("signUP --- ");
+    this.navCtrl.push('SignupPage');
   }
 
 
