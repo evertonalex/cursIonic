@@ -5,6 +5,8 @@ import { CidadeService } from './../../app/services/domain/cidade.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ClienteService } from '../../app/services/domain/cliente.service';
+import { AlertController } from '../../../node_modules/ionic-angular/components/alert/alert-controller';
 
 @IonicPage()
 @Component({
@@ -22,7 +24,9 @@ export class SignupPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public cidadeService: CidadeService,
-    public estadoService: EstadoService) {
+    public estadoService: EstadoService,
+    public clienteService: ClienteService,
+    public alertCtrl: AlertController) {
 
       this.formGroup = this.formBuilder.group({//responsável por instanciar um form group
         nome:['nome', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
@@ -39,7 +43,7 @@ export class SignupPage {
         telefone2 : ['',[]],
         telefone3 : ['',[]],
         estadoId : [null, [Validators.required]],
-        cidadeId : [null,[Validators.required]]
+        cidadeID : [null,[Validators.required]]
       });
   }
 
@@ -56,7 +60,7 @@ export class SignupPage {
     this.cidadeService.findAll(estado_id).subscribe(
       response=>{
         this.cidades = response;
-        this.formGroup.controls.cidadeId.setValue(null);
+        this.formGroup.controls.cidadeID.setValue(null);
       },
       error => {}
     )
@@ -64,6 +68,27 @@ export class SignupPage {
 
   signupUser(){
     console.log("enviou o form");
+    console.log(this.formGroup.value);
+    this.clienteService.insert(this.formGroup.value).subscribe(reponse=>{
+      this.showInsertOk();
+    },
+    error=>{})
+  }
+  showInsertOk(){
+    let alert = this.alertCtrl.create({
+      title: "Sucesso!",
+      message: 'Cadastro efetuado com sucesso!',
+      enableBackdropDismiss: false,
+      buttons:[
+        {
+          text: 'Ok',
+          handler:()=>{
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 
