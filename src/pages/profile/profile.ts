@@ -26,7 +26,7 @@ export class ProfilePage {
     console.log("ionViewDidLoad - Profile")
     if(localUser && localUser.email){
       this.ClienteService.findByEmail(localUser.email).subscribe(response=>{
-        this.cliente = response;
+        this.cliente = response as ClienteDTO;
         //buscar imagem
       },
       error=>{
