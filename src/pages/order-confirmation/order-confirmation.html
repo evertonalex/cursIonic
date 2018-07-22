@@ -3,13 +3,14 @@
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>Confira seu pedido</ion-title>
+      <ion-title *ngIf="codpedido">Pedido registrado</ion-title>
+      <ion-title *ngIf="!codpedido">Confira seu pedido</ion-title>
     </ion-navbar>
   </ion-header>
   
   <ion-content padding>
   
-    <div >
+    <div *ngIf="!codpedido">
       <ion-card>
         <ion-card-header>
           Itens do pedido
